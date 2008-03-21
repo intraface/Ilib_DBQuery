@@ -5,7 +5,7 @@
     <taskdef classname="phing.tasks.ext.FtpDeployTask" name="ftpdeploy" />
 
     <property name="package-name" value="${phing.project.name}" />
-    <property name="version" value="0.1.1" />
+    <property name="version" value="0.1.2" />
     <property name="stability" value="alpha" />
     <property name="pear.channel" value="public.intraface.dk" />
 
@@ -24,7 +24,7 @@
     <target name="export">
         <echo msg="Exporting SVN files" />
         <delete dir="${build.dir}" />
-        <exec command="svn export ${source.dir} ${build.dir}" />
+        <exec command="svn export ${source.dir}/src ${build.dir}" />
     </target>
 
     <target name="pear" depends="export">
@@ -63,7 +63,7 @@
             </dependencies>
 
             <notes>
-                * Did some code cleanups and added more tests
+                * Fixed wrong installation of package
             </notes>
         </d51pearpkg2>
     </target>
