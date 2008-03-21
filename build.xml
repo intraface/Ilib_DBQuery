@@ -41,7 +41,7 @@
     </target>
 
     <target name="pear" depends="export">
-        <d51pearpkg2 dir="${build.dir}/" baseinstalldir="/">
+        <d51pearpkg2 dir="${build.dir}/package/${package-name}-${version}/" baseinstalldir="/">
             <name>${package-name}</name>
             <summary>DB query management with paging and storing of results</summary>
             <channel>${pear.channel}</channel>
@@ -118,6 +118,10 @@
 
     <target name="test">
         <exec dir="${tests.dir}" command="phpunit
+          --log-xml ${reports.phpunit.dir}/phpunit.xml
+          --log-pmd ${reports.phpunit.dir}/phpunit.pmd.xml
+          --coverage-xml ${reports.phpunit.dir}/phpunit.coverage.xml
+          --coverage-html ${reports.coverage.dir}/
           DBQueryTest" passthru="true" checkreturn="true" />
     </target>
 
