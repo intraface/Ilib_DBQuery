@@ -2,7 +2,7 @@
 require_once dirname(__FILE__) . '/config.test.php';
 
 require_once 'PHPUnit/Framework.php';
-require_once 'Ilib/DBQuery.php';
+require_once '../src/Ilib/DBQuery.php';
 
 PHPUnit_Util_Filter::addDirectoryToWhitelist(realpath(dirname(__FILE__) . '/../src/'), '.php');
 
