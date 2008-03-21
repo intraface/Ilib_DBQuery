@@ -25,6 +25,19 @@
         <echo msg="Exporting SVN files" />
         <delete dir="${build.dir}" />
         <exec command="svn export ${source.dir}/src ${build.dir}" />
+        
+        <mkdir dir="${build.dir}/package/${package-name}-${version}" />
+        <copy todir="${build.dir}/package/${package-name}-${version}">
+            <filterchain>
+                <replacetokens begintoken="@@" endtoken="@@">
+                    <token key="VERSION" value="${version}" />
+                </replacetokens>
+            </filterchain>
+            
+            <fileset dir="${build.dir}">
+                <include name="Ilib/**" />
+            </fileset>
+        </copy>
     </target>
 
     <target name="pear" depends="export">
@@ -73,13 +86,7 @@
 
     <target name="make-pearpackage" depends="pear">
         <echo msg="Creating PEAR archive file for ${package-name}" />
-        <mkdir dir="${build.dir}/${package-name}-${version}" />
-        <copy todir="${build.dir}/${package-name}-${version}">
-            <fileset dir="${build.dir}">
-                <include name="**" />
-            </fileset>
-        </copy>
-        <tar compression="gzip" destfile="${build.dir}/${package-name}-${version}.tgz" basedir="${build.dir}" />
+        <tar compression="gzip" destfile="${build.dir}/${package-name}-${version}.tgz" basedir="${build.dir}/package" />
     </target>
 
     <target name="deploy" depends="make-pearpackage">
@@ -111,10 +118,6 @@
 
     <target name="test">
         <exec dir="${tests.dir}" command="phpunit
-          --log-xml ${reports.phpunit.dir}/phpunit.xml
-          --log-pmd ${reports.phpunit.dir}/phpunit.pmd.xml
-          --coverage-xml ${reports.phpunit.dir}/phpunit.coverage.xml
-          --coverage-html ${reports.coverage.dir}/
           DBQueryTest" passthru="true" checkreturn="true" />
     </target>
 
