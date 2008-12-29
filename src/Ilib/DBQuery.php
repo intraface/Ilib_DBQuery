@@ -175,6 +175,18 @@ class Ilib_DBQuery
         $this->rows_pr_page        = 20; // Systemdefault!
         $this->uri                 = basename($_SERVER['PHP_SELF']);
     }
+    
+    private function cleanUpStore()
+    {
+        if (count($this->store_extra_condition) > 0) {
+            $store_extra_condition = ' AND '.implode(' AND ', $this->store_extra_condition);
+        } else {
+            $store_extra_condition = '';
+        }
+        
+        $db = new DB_sql;
+        $db->query("DELETE FROM `dbquery_result` WHERE `date_time` + INTERVAL 1 WEEK < NOW() ".$store_extra_condition);
+    }
 
     /**
      * Prepares the store of dbquery
@@ -197,6 +209,8 @@ class Ilib_DBQuery
         } else {
             $this->store_extra_condition = $extra_condition;
         }
+        
+        $this->cleanUpStore();
     }
 
     /**
