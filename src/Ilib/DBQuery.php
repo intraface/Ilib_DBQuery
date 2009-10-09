@@ -101,6 +101,12 @@ class Ilib_DBQuery
      * @var boolean
      */
     protected $use_character;
+    
+    /**
+     * 
+     * @var string
+     */
+    private $stored_character;
 
     /**
      * @var string
@@ -684,6 +690,48 @@ class Ilib_DBQuery
 
         $this->use_stored = $value;
     }
+    
+    public function loadStored()
+    {
+        // $this->store_name != "" && (isset($_GET[$this->store_var_name]) && $_GET[$this->store_var_name] == "true")
+        if ($this->store_session_id == '') {
+            trigger_error('You need to set session_id before storing a result. Use createStore to do that', E_USER_ERROR);
+            return false;
+        }
+
+        if (count($this->store_extra_condition) > 0) {
+            $store_extra_condition = implode(' AND ', $this->store_extra_condition).' AND ';
+        } else {
+            $store_extra_condition = '';
+        }
+
+        $db = new DB_sql;
+        $db->query("SELECT dbquery_condition, joins, keyword, paging, sorting, filter, first_character FROM dbquery_result WHERE " .
+                "session_id = \"".$this->store_session_id."\" AND " .
+                $store_extra_condition.
+                "name = \"".$this->store_name."\"");
+
+        if ($db->nextRecord()) {
+            $this->condition   = unserialize(base64_decode($db->f("dbquery_condition")));
+            $this->join        = unserialize(base64_decode($db->f("joins")));
+            $this->keyword_ids = unserialize(base64_decode($db->f("keyword")));
+            if ($this->paging_start === null) {
+                // Kun hvis den ikke manuelt er blevet sat, så skal den sættes.
+                $this->paging_start = $db->f("paging");
+            }
+            $this->sorting = unserialize(base64_decode($db->f("sorting")));
+            $this->filter  = unserialize(base64_decode($db->f("filter")));
+            // $this->group_by = unserialize(base64_decode($db->f("group_by")));
+            // $this->having_condition = unserialize(base64_decode($db->f("having_condition")));
+
+
+            $this->stored_character = $db->f("first_character");
+            // Hvis character er sat, så benyttes character
+            if ($this->stored_character != "") {
+                $this->use_character = true;
+            }
+        }
+    }
 
     /*********************** FUNKTIONER TIL AT RETURNERE SQL-STRENG *************************/
 
@@ -700,48 +748,12 @@ class Ilib_DBQuery
     {
         $db               = new DB_sql;
         $csql             = ""; //Definere variable
-        $stored_character = false;
+        $this->stored_character = false;
 
         // Henter stored result, hvis det er aktiveret og hvis det bliver efterspurgt.
         // hack use_stored = 1 LO Bruges i webshop. Ved ikke om det er tiltænkt sådan
         if ($use != "full" && $this->use_stored) {
-            // $this->store_name != "" && (isset($_GET[$this->store_var_name]) && $_GET[$this->store_var_name] == "true")
-            if ($this->store_session_id == '') {
-                trigger_error('You need to set session_id before storing a result. Use createStore to do that', E_USER_ERROR);
-                return false;
-            }
-
-            if (count($this->store_extra_condition) > 0) {
-                $store_extra_condition = implode(' AND ', $this->store_extra_condition).' AND ';
-            } else {
-                $store_extra_condition = '';
-            }
-
-            $db->query("SELECT dbquery_condition, joins, keyword, paging, sorting, filter, first_character FROM dbquery_result WHERE " .
-                    "session_id = \"".$this->store_session_id."\" AND " .
-                    $store_extra_condition.
-                    "name = \"".$this->store_name."\"");
-
-            if ($db->nextRecord()) {
-                $this->condition   = unserialize(base64_decode($db->f("dbquery_condition")));
-                $this->join        = unserialize(base64_decode($db->f("joins")));
-                $this->keyword_ids = unserialize(base64_decode($db->f("keyword")));
-                if ($this->paging_start === null) {
-                    // Kun hvis den ikke manuelt er blevet sat, så skal den sættes.
-                    $this->paging_start = $db->f("paging");
-                }
-                $this->sorting = unserialize(base64_decode($db->f("sorting")));
-                $this->filter  = unserialize(base64_decode($db->f("filter")));
-                // $this->group_by = unserialize(base64_decode($db->f("group_by")));
-                // $this->having_condition = unserialize(base64_decode($db->f("having_condition")));
-
-
-                $stored_character = $db->f("first_character");
-                // Hvis character er sat, så benyttes character
-                if ($stored_character != "") {
-                    $this->use_character = true;
-                }
-            }
+            $this->loadStored();
         }
 
         if ($this->paging_start === null) {
@@ -758,8 +770,8 @@ class Ilib_DBQuery
 
             if (isset($_GET[$this->character_var_name]) && $_GET[$this->character_var_name] != "") {
                 $this->character = $_GET[$this->character_var_name];
-            } elseif ($stored_character !== false) {
-                $this->character = $stored_character;
+            } elseif ($this->stored_character !== false) {
+                $this->character = $this->stored_character;
 
                 // keep it that way
             } else {
