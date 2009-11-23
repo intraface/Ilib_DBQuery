@@ -4,7 +4,7 @@
     <taskdef classname="phing.tasks.ext.IlibPearDeployerTask" name="peardeploy" />
 
     <property name="package-name" value="${phing.project.name}" />
-    <property name="version" value="0.1.4" />
+    <property name="version" value="0.1.5" />
     <property name="stability" value="stable" />
     <property name="pear.channel" value="public.intraface.dk" />
 
@@ -44,9 +44,7 @@
             <summary>DB query management with paging and storing of results</summary>
             <channel>${pear.channel}</channel>
             <description>
-                
-                DB query management with paging and storing of
-                results
+                DB query management with paging and storing of results
             </description>
             <lead user="lsolesen" name="Lars Olesen" email="lars@legestue.net" />
             <lead user="sune.t.jensen" name="Sune Jensen" email="sj@sunet.dk" />
@@ -61,7 +59,7 @@
                 <package name="DB_Sql" channel="public.intraface.dk" recommended_version="0.0.1" minimum_version="0.0.1" />
                 <package name="Ilib_Error" channel="public.intraface.dk" recommended_version="0.0.1" minimum_version="0.0.1" />
             </dependencies>
-            <notes>* Made it possible to load stored without getting recordset.</notes>
+            <notes>* Removed require_once of files.</notes>
         </d51pearpkg2>
     </target>
 

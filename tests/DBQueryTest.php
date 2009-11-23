@@ -2,7 +2,10 @@
 require_once dirname(__FILE__) . '/config.test.php';
 
 require_once 'PHPUnit/Framework.php';
-require_once '../src/Ilib/DBQuery.php';
+require_once 'Ilib/DBQuery.php';
+require_once 'MDB2.php';
+require_once 'Ilib/Error.php';
+require_once 'DB/Sql.php';
 
 PHPUnit_Util_Filter::addDirectoryToWhitelist(realpath(dirname(__FILE__) . '/../src/'), '.php');
 
@@ -29,7 +32,6 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $result = $this->db->exec('TRUNCATE TABLE dbquery_result');
         $result = $this->db->exec('TRUNCATE TABLE keyword');
         $result = $this->db->exec('TRUNCATE TABLE keyword_x_object');
-
 
         $result = $this->db->exec('DROP TABLE ' . $this->table);
         /*
