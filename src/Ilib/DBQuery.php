@@ -21,12 +21,6 @@
  */
 
 /**
- * Required files
- */
-require_once 'DB/Sql.php';
-require_once 'Ilib/Error.php';
-
-/**
  * This class makes the filtering and paging on getList metodes
  *
  * @category Ilib
@@ -101,9 +95,9 @@ class Ilib_DBQuery
      * @var boolean
      */
     protected $use_character;
-    
+
     /**
-     * 
+     *
      * @var string
      */
     private $stored_character;
@@ -690,7 +684,7 @@ class Ilib_DBQuery
 
         $this->use_stored = $value;
     }
-    
+
     public function loadStored()
     {
         // $this->store_name != "" && (isset($_GET[$this->store_var_name]) && $_GET[$this->store_var_name] == "true")
