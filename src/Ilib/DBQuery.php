@@ -379,7 +379,7 @@ class Ilib_DBQuery
 
             if ($this->paging_start < $this->recordset_num_rows - $this->rows_pr_page) { // $_GET[$this->paging_var_name]
                 if ($view == "html") {
-                    $but[$j] = "<a href=\"".$this->getUri()."?".$this->paging_var_name."=".($this->paging_start + $this->rows_pr_page).$url."&amp;".$this->extra_uri."\">Næste</a>"; // $_GET[$this->paging_var_name]
+                    $but[$j] = "<a href=\"".$this->getUri()."?".$this->paging_var_name."=".($this->paging_start + $this->rows_pr_page).$url."&amp;".$this->extra_uri."\">N&aelig;ste</a>"; // $_GET[$this->paging_var_name]
                 } else {
                     $but['next'] = $this->paging_start + $this->rows_pr_page; // $_GET[$this->paging_var_name]
                 }
