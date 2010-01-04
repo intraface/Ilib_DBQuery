@@ -176,6 +176,11 @@ class Ilib_DBQuery
         $this->uri                 = basename($_SERVER['PHP_SELF']);
     }
 
+    /**
+     * Cleans up the store
+     *
+     * @return void
+     */
     private function cleanUpStore()
     {
         if (count($this->store_extra_condition) > 0) {
@@ -561,7 +566,6 @@ class Ilib_DBQuery
         }
     }
 
-
     /**
      * Manually set paging offset
      *
@@ -685,6 +689,9 @@ class Ilib_DBQuery
         $this->use_stored = $value;
     }
 
+    /**
+     * Load stored
+     */
     public function loadStored()
     {
         // $this->store_name != "" && (isset($_GET[$this->store_var_name]) && $_GET[$this->store_var_name] == "true")
