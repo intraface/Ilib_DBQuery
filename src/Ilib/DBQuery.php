@@ -319,7 +319,7 @@ class Ilib_DBQuery
                     if ($this->character == strtolower($bogstav)) {
                         $chars[$i] = '<strong>'.strtolower($bogstav).'</strong>';
                     } else {
-                        $chars[$i] = "<a href=\"".$this->getUri()."?".$this->character_var_name."=".strtolower($bogstav)."&amp;".$this->extra_uri."\">".strtolower($bogstav)."</a>";
+                        $chars[$i] = "<a href=\"".$this->getCharacterUrl($bogstav)."\">".strtolower($bogstav)."</a>";
                     }
                 } else {
                     $chars[$i] = strtolower($bogstav);
@@ -328,6 +328,31 @@ class Ilib_DBQuery
             }
         }
         return $chars;
+    }
+
+    protected function uriHasQuestionMark()
+    {
+        return strpos($this->getUri(), '?');
+    }
+
+    protected function getSeparatorForThisUrl()
+    {
+        if (!$this->uriHasQuestionMark()) {
+            $separator = '?';
+        } else {
+            $separator = '&amp;';
+        }
+        return $separator;
+    }
+
+    protected function getCharacterUrl($bogstav)
+    {
+        return $this->getUri().$this->getSeparatorForThisUrl().$this->character_var_name."=".strtolower($bogstav)."&amp;".$this->extra_uri;
+    }
+
+    function getPagingUrl($i)
+    {
+        return $this->getUri().$this->getSeparatorForThisUrl().$this->paging_var_name."=".($i*$this->rows_pr_page).$url."&amp;".$this->extra_uri;
     }
 
     /**
@@ -363,7 +388,7 @@ class Ilib_DBQuery
                 if ($this->paging_start == $i*$this->rows_pr_page) {
                     $but[$j] = "<strong>".$j."</strong>";
                 } else {
-                    $but[$j] = "<a href=\"".$this->getUri()."?".$this->paging_var_name."=".($i*$this->rows_pr_page).$url."&amp;".$this->extra_uri."\">".$j."</a>";
+                    $but[$j] = "<a href=\"".$this->getPagingUrl($i)."\">".$j."</a>";
                 }
             } else {
                 $but['offset'][$j] = $i * $this->rows_pr_page;
@@ -374,7 +399,7 @@ class Ilib_DBQuery
         if (count($but) > 0) {
             if ($this->paging_start > 0) { // $_GET[$this->paging_var_name]
                 if ($view == "html") {
-                    $but[0] = "<a href=\"".$this->getUri()."?".$this->paging_var_name."=".($this->paging_start - $this->rows_pr_page).$url."&amp;".$this->extra_uri."\">Forrige</a>"; // $_GET[$this->paging_var_name]
+                    $but[0] = "<a href=\"".$this->getUri().$this->getSeparatorForThisUrl().$this->paging_var_name."=".($this->paging_start - $this->rows_pr_page).$url."&amp;".$this->extra_uri."\">Forrige</a>"; // $_GET[$this->paging_var_name]
                 } else {
                     $but['next'] = $this->paging_start - $this->rows_pr_page; // $_GET[$this->paging_var_name]
                 }
@@ -384,7 +409,7 @@ class Ilib_DBQuery
 
             if ($this->paging_start < $this->recordset_num_rows - $this->rows_pr_page) { // $_GET[$this->paging_var_name]
                 if ($view == "html") {
-                    $but[$j] = "<a href=\"".$this->getUri()."?".$this->paging_var_name."=".($this->paging_start + $this->rows_pr_page).$url."&amp;".$this->extra_uri."\">N&aelig;ste</a>"; // $_GET[$this->paging_var_name]
+                    $but[$j] = "<a href=\"".$this->getUri().$this->getSeparatorForThisUrl().$this->paging_var_name."=".($this->paging_start + $this->rows_pr_page).$url."&amp;".$this->extra_uri."\">N&aelig;ste</a>"; // $_GET[$this->paging_var_name]
                 } else {
                     $but['next'] = $this->paging_start + $this->rows_pr_page; // $_GET[$this->paging_var_name]
                 }
