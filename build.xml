@@ -4,7 +4,7 @@
     <taskdef classname="phing.tasks.ext.IlibPearDeployerTask" name="peardeploy" />
 
     <property name="package-name" value="${phing.project.name}" />
-    <property name="version" value="0.1.5" />
+    <property name="version" value="0.1.6" />
     <property name="stability" value="stable" />
     <property name="pear.channel" value="public.intraface.dk" />
 
@@ -59,7 +59,7 @@
                 <package name="DB_Sql" channel="public.intraface.dk" recommended_version="0.0.1" minimum_version="0.0.1" />
                 <package name="Ilib_Error" channel="public.intraface.dk" recommended_version="0.0.1" minimum_version="0.0.1" />
             </dependencies>
-            <notes>* Removed require_once of files.</notes>
+            <notes>* Now checks whether the uri has a questionmark</notes>
         </d51pearpkg2>
     </target>
 
