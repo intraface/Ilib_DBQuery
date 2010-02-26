@@ -189,7 +189,7 @@ class Ilib_DBQuery
             $store_extra_condition = '';
         }
 
-        $db = new DB_sql;
+        $db = new DB_Sql;
         $db->query("DELETE FROM `dbquery_result` WHERE `date_time` + INTERVAL 1 DAY < NOW() ".$store_extra_condition);
     }
 
