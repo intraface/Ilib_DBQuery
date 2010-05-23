@@ -352,7 +352,7 @@ class Ilib_DBQuery
 
     function getPagingUrl($i)
     {
-        return $this->getUri().$this->getSeparatorForThisUrl().$this->paging_var_name."=".($i*$this->rows_pr_page).$url."&amp;".$this->extra_uri;
+        return $this->getUri().$this->getSeparatorForThisUrl().$this->paging_var_name."=".($i*$this->rows_pr_page)."&amp;".$this->extra_uri;
     }
 
     /**
