@@ -1,15 +1,10 @@
 <?php
 require_once dirname(__FILE__) . '/config.test.php';
 
-require_once 'PHPUnit/Framework.php';
-require_once 'Ilib/DBQuery.php';
+require_once '../src/Ilib/DBQuery.php';
 require_once 'MDB2.php';
 require_once 'Ilib/Error.php';
 require_once 'DB/Sql.php';
-
-PHPUnit_Util_Filter::addDirectoryToWhitelist(realpath(dirname(__FILE__) . '/../src/'), '.php');
-
-define('DB_DSN', TESTS_DB_DSN);
 
 /**
  * The actual tests of DBQuery should be in Intraface_3Party
