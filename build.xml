@@ -55,9 +55,9 @@
             </release>
             <dependencies>
                 <php minimum_version="5.2.0" />
-                <pear minimum_version="1.6.0" recommended_version="1.6.1" />
-                <package name="DB_Sql" channel="public.intraface.dk" recommended_version="0.0.1" minimum_version="0.0.1" />
-                <package name="Ilib_Error" channel="public.intraface.dk" recommended_version="0.0.1" minimum_version="0.0.1" />
+                <pear minimum_version="1.6.0" />
+                <package name="DB_Sql" channel="public.intraface.dk" minimum_version="0.0.1" />
+                <package name="Ilib_Error" channel="public.intraface.dk" minimum_version="0.0.1" />
             </dependencies>
             <notes>* Removed double private on load()</notes>
         </d51pearpkg2>
