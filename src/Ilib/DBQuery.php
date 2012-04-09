@@ -176,6 +176,12 @@ class Ilib_DBQuery
         $this->uri                 = basename($_SERVER['PHP_SELF']);
     }
 
+    function getDBSql()
+    {
+        $db_sql = new DB_Sql;
+        return $db_sql;
+    }
+
     /**
      * Cleans up the store
      *
@@ -189,7 +195,7 @@ class Ilib_DBQuery
             $store_extra_condition = '';
         }
 
-        $db = new DB_Sql;
+        $db = $this->getDBSql();
         $db->query("DELETE FROM `dbquery_result` WHERE `date_time` + INTERVAL 1 DAY < NOW() ".$store_extra_condition);
     }
 
@@ -285,8 +291,7 @@ class Ilib_DBQuery
      */
     public function getCharacters($view = "")
     {
-        // Denne funktion kan optimeres med, at hvis den kaldes 2 gange, så benytter den bare det gamle resultat igen.
-
+        // @todo Optimize this function. If it is called twice use the old result again.
         $chars = array();
         if ($this->character_var_name != "") {
             $i   = 0;
@@ -376,7 +381,7 @@ class Ilib_DBQuery
         }
 
         if ($this->recordset_num_rows <= $this->rows_pr_page) {
-            // Der er færre poster end pr. side. Paging kan ikke betale sig
+            // No paging. Fewer posts than allowed pr. page
             return array();
         }
 
@@ -727,7 +732,7 @@ class Ilib_DBQuery
             $store_extra_condition = '';
         }
 
-        $db = new DB_sql;
+        $db = $this->getDBSql();
         $db->query("SELECT dbquery_condition, joins, keyword, paging, sorting, filter, first_character FROM dbquery_result WHERE " .
                 "session_id = \"".$this->store_session_id."\" AND " .
                 $store_extra_condition.
@@ -765,8 +770,8 @@ class Ilib_DBQuery
      */
     public function getRecordset($fields, $use = "", $print = false)
     {
-        $db               = new DB_sql;
-        $csql             = ""; //Definere variable
+        $db = $this->getDBSql();
+        $csql = ""; //Definere variable
         $this->stored_character = false;
 
         // Henter stored result, hvis det er aktiveret og hvis det bliver efterspurgt.
