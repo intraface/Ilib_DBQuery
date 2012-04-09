@@ -21,14 +21,14 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
 
         $this->db = MDB2::factory(TESTS_DB_DSN);
         if (PEAR::isError($this->db)) {
-            die($this->db->getUserInfo());
+            throw new Exception($this->db->getUserInfo());
         }
-
         $result = $this->db->exec('TRUNCATE TABLE dbquery_result');
         $result = $this->db->exec('TRUNCATE TABLE keyword');
         $result = $this->db->exec('TRUNCATE TABLE keyword_x_object');
 
         $result = $this->db->exec('DROP TABLE ' . $this->table);
+
         /*
          TODO: DROP THE TABLE IF IT EXISTS
 
@@ -57,10 +57,12 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
 
     function insertPosts($count = 21)
     {
-        $data = array('one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty', 'twentyone', 'æske', 'åbne');
+        $data = array('one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'æske', 'åbne');
         $i = 0;
         foreach ($data as $d) {
-            if ($count <= $i) break;
+            if ($count <= $i) {
+                break;
+            }
             $this->createPost($d);
             $i++;
         }
@@ -70,7 +72,7 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
     {
         $result = $this->db->exec('INSERT INTO ' . $this->table . ' (name) VALUES ('.$this->db->quote($post, 'text').')');
         if (PEAR::isError($result)) {
-            die($result->getUserInfo());
+            throw new Exception($result->getUserInfo());
         }
     }
 
@@ -104,7 +106,7 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $dbquery->defineCharacter('t', 'name');
         $this->assertTrue($dbquery->getUseCharacter());
         $characters = $dbquery->getCharacters();
-        $this->assertEquals(6, count($characters));
+        $this->assertEquals(8, count($characters));
     }
 
     function testDisplayCharactersWillNotDiplayIfPostsBelowThreshold()
@@ -115,7 +117,7 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         );
 
         if (PEAR::isError($result)) {
-            die($result->getUserInfo());
+            throw new Exception($result->getUserInfo());
         }
 
         $this->insertPosts(21);
@@ -145,15 +147,19 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, $paging['next']);
     }
 
-    function testPaging()
+    function testGetCharactersEncoding()
     {
         $dbquery = $this->createDBQuery();
-        $paging_name = 'paging';
-        $rows_pr_page = 2;
-        $dbquery->usePaging($paging_name, $rows_pr_page);
+        $dbquery->useCharacter();
+        $dbquery->defineCharacter("character", "name");
+
         $db = $dbquery->getRecordset('*', '', false);
 
-        print $dbquery->display('character');
+        $expected = array(
+            'e', 'f', 'n', 'o', 's', 't', 'æ', 'ø'
+        );
+
+        $this->assertEquals($expected, $dbquery->getCharacters());
     }
 
     function testGetUriReturnsCorrectLink()
