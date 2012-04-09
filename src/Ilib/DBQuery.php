@@ -863,7 +863,6 @@ class Ilib_DBQuery
             }
         }
 
-
         $sql .= $sql_end;
 
         // Laver paging
@@ -926,7 +925,6 @@ class Ilib_DBQuery
             }
         }
 
-
         $sql = "SELECT ".$fields." ".$sql;
 
         if ($print) {
@@ -936,7 +934,6 @@ class Ilib_DBQuery
         $db->query($sql);
 
         return $db;
-
     }
 
     /**
