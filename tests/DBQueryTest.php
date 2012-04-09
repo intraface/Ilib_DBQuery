@@ -145,6 +145,17 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, $paging['next']);
     }
 
+    function testPaging()
+    {
+        $dbquery = $this->createDBQuery();
+        $paging_name = 'paging';
+        $rows_pr_page = 2;
+        $dbquery->usePaging($paging_name, $rows_pr_page);
+        $db = $dbquery->getRecordset('*', '', false);
+
+        print $dbquery->display('character');
+    }
+
     function testGetUriReturnsCorrectLink()
     {
         $dbquery = $this->createDBQuery();
@@ -154,7 +165,8 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($uri, $paging);
     }
 
-    function testGetRecordset() {
+    function testGetRecordset()
+    {
         $dbquery = $this->createDBQuery();
 
         $dbquery->setCondition('id > 2');
@@ -264,7 +276,8 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(11, count($result));
     }
 
-    function testUseStoreWithTwoDifferentUsers() {
+    function testUseStoreWithTwoDifferentUsers()
+    {
         // the first page
         $dbquery = $this->createDBQuery();
         $dbquery->createStore($this->session_id, 'intranet_id = 1');
