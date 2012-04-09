@@ -57,7 +57,7 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
 
     function insertPosts($count = 21)
     {
-        $data = array('one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty', 'twentyone');
+        $data = array('one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty', 'twentyone', 'æske', 'åbne');
         $i = 0;
         foreach ($data as $d) {
             if ($count <= $i) break;
@@ -161,7 +161,7 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
 
         $db = $dbquery->getRecordset('id, name');
         $i = 0;
-        while($db->nextRecord()) {
+        while ($db->nextRecord()) {
             $result[$i]['id'] = $db->f('id');
             $result[$i]['name'] = $db->f('name');
             $i++;
@@ -196,7 +196,7 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $dbquery->storeResult("use_stored", 'unittest', "toplevel");
         $db = $dbquery->getRecordset('id, name');
         $i = 0;
-        while($db->nextRecord()) {
+        while ($db->nextRecord()) {
             $result[$i]['id'] = $db->f('id');
             $result[$i]['name'] = $db->f('name');
             $i++;
@@ -226,7 +226,7 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $dbquery->storeResult("use_stored", 'unittest', "toplevel");
         $db = $dbquery->getRecordset('id, name');
         $i = 0;
-        while($db->nextRecord()) {
+        while ($db->nextRecord()) {
             $result[$i]['id'] = $db->f('id');
             $result[$i]['name'] = $db->f('name');
             $i++;
@@ -256,7 +256,7 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $dbquery->storeResult("use_stored", 'unittest', "toplevel");
         $db = $dbquery->getRecordset('id, name');
         $i = 0;
-        while($db->nextRecord()) {
+        while ($db->nextRecord()) {
             $result[$i]['id'] = $db->f('id');
             $result[$i]['name'] = $db->f('name');
             $i++;
@@ -285,7 +285,7 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $dbquery->storeResult("use_stored", 'unittest', "toplevel");
         $db = $dbquery->getRecordset('id, name');
         $i = 0;
-        while($db->nextRecord()) {
+        while ($db->nextRecord()) {
             $result[$i]['id'] = $db->f('id');
             $result[$i]['name'] = $db->f('name');
             $i++;
@@ -295,11 +295,10 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
 
     function testGetResultWithOneKeyword()
     {
-
         // actual not necesarry now
         $this->db->exec('INSERT INTO keyword SET keyword = "keyword1"');
 
-        for($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $this->db->exec('INSERT INTO keyword_x_object SET intranet_id = 1, belong_to = '.$i.', keyword_id = 1');
         }
 
@@ -309,7 +308,7 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
 
         $db = $dbquery->getRecordset('dbquery_test.id, dbquery_test.name');
         $i = 0;
-        while($db->nextRecord()) {
+        while ($db->nextRecord()) {
             $result[$i]['id'] = $db->f('id');
             $result[$i]['name'] = $db->f('name');
             $i++;
@@ -327,11 +326,11 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $this->db->exec('INSERT INTO keyword SET keyword = "keyword3"');
 
 
-        for($i = 3; $i <= 18; $i++) {
+        for ($i = 3; $i <= 18; $i++) {
             $this->db->exec('INSERT INTO keyword_x_object SET intranet_id = 1, belong_to = '.$i.', keyword_id = 1');
             $this->db->exec('INSERT INTO keyword_x_object SET intranet_id = 1, belong_to = '.$i.', keyword_id = 3');
 
-            if($i <= 14) {
+            if ($i <= 14) {
                 $this->db->exec('INSERT INTO keyword_x_object SET intranet_id = 1, belong_to = '.$i.', keyword_id = 2');
             }
         }
@@ -342,14 +341,12 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
 
         $db = $dbquery->getRecordset('dbquery_test.id, dbquery_test.name');
         $i = 0;
-        while($db->nextRecord()) {
+        while ($db->nextRecord()) {
             $result[$i]['id'] = $db->f('id');
             $result[$i]['name'] = $db->f('name');
             $i++;
         }
 
         $this->assertEquals(12, count($result));
-
     }
-
 }
