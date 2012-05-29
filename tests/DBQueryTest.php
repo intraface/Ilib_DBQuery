@@ -1,10 +1,12 @@
 <?php
 require_once dirname(__FILE__) . '/bootstrap.php';
-
 require_once dirname(__FILE__) . '/../src/Ilib/DBQuery.php';
 require_once 'MDB2.php';
 require_once 'Ilib/Error.php';
 require_once 'DB/Sql.php';
+
+define('TESTS_DB_DSN', 'mysql://'.$GLOBALS['db_username'].':'.$GLOBALS['db_password'].'@localhost/'.$GLOBALS['db_name']);
+define('DB_DSN', TESTS_DB_DSN);
 
 /**
  * The actual tests of DBQuery should be in Intraface_3Party
@@ -19,9 +21,6 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
     function setUp()
     {
         $this->session_id = 'dsjr93jdi93id39ei2d93kdd9d2';
-
-        define('TESTS_DB_DSN', 'mysql://'.$GLOBALS['db_username'].':'.$GLOBALS['db_password'].'@localhost/'.$GLOBALS['db_name']);
-        define('DB_DSN', TESTS_DB_DSN);
 
         $this->db = MDB2::factory(TESTS_DB_DSN);
         if (PEAR::isError($this->db)) {
