@@ -38,9 +38,29 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $result = $this->db->exec('DROP TABLE ' . $this->table);
         */
 
-        $result = $this->db->exec('CREATE TABLE ' . $this->table . '(
+        $result = $this->db->exec('CREATE TABLE IF NOT EXISTS ' . $this->table . '(
             id int(11) NOT NULL auto_increment, name varchar(255) NOT NULL, PRIMARY KEY  (id))'
         );
+        $result = $this->db->exec('CREATE TABLE IF NOT EXISTS `dbquery_result` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `intranet_id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `session_id` varchar(255) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `toplevel` int(11) NOT NULL DEFAULT '0',
+  `dbquery_condition` blob NOT NULL,
+  `joins` blob NOT NULL,
+  `keyword` blob NOT NULL,
+  `first_character` varchar(255) NOT NULL DEFAULT '',
+  `paging` int(11) NOT NULL DEFAULT '0',
+  `sorting` blob NOT NULL,
+  `filter` blob NOT NULL,
+  `date_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `intranet_id` (`intranet_id`,`session_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;'
+        );
+
         $this->insertPosts();
     }
 
