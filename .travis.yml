@@ -4,4 +4,8 @@ php:
   - 5.3
 before_script:
   - mysql -e 'create database ilib_dbquery_test;'
+  - pyrus install http://pear.php.net/MDB2
+  - pyrus install http://public.intraface.dk/DB_Sql  
+  - pyrus install http://public.intraface.dk/Ilib_Error  
+  - phpenv rehash
 script: phpunit --configuration tests/phpunit.xml --coverage-text
