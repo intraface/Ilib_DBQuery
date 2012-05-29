@@ -23,9 +23,6 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $this->session_id = 'dsjr93jdi93id39ei2d93kdd9d2';
 
         $this->db = MDB2::factory(TESTS_DB_DSN);
-        if (PEAR::isError($this->db)) {
-            throw new Exception($this->db->getUserInfo());
-        }
         $result = $this->db->exec('TRUNCATE TABLE dbquery_result');
         $result = $this->db->exec('TRUNCATE TABLE keyword');
         $result = $this->db->exec('TRUNCATE TABLE keyword_x_object');
@@ -36,20 +33,11 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
          TODO: DROP THE TABLE IF IT EXISTS
 
         $result = $this->db->exec('DROP TABLE ' . $this->table);
-
-        if (PEAR::isError($result)) {
-            die($result->getUserInfo());
-        }
         */
 
         $result = $this->db->exec('CREATE TABLE ' . $this->table . '(
             id int(11) NOT NULL auto_increment, name varchar(255) NOT NULL, PRIMARY KEY  (id))'
         );
-
-        if (PEAR::isError($result)) {
-            die($result->getUserInfo());
-        }
-
         $this->insertPosts();
     }
 
@@ -74,17 +62,11 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
     function createPost($post)
     {
         $result = $this->db->exec('INSERT INTO ' . $this->table . ' (name) VALUES ('.$this->db->quote($post, 'text').')');
-        if (PEAR::isError($result)) {
-            throw new Exception($result->getUserInfo());
-        }
     }
 
     function tearDown()
     {
         $this->db = MDB2::factory(TESTS_DB_DSN);
-        if (PEAR::isError($this->db)) {
-            throw new Exception($this->db->getUserInfo());
-        }
         $result = $this->db->exec('DROP TABLE ' . $this->table);
     }
 
@@ -122,10 +104,6 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $result = $this->db->exec('CREATE TABLE ' . $this->table . '(
             id int(11) NOT NULL auto_increment, name varchar(255) NOT NULL, PRIMARY KEY  (id))'
         );
-
-        if (PEAR::isError($result)) {
-            throw new Exception($result->getUserInfo());
-        }
 
         $this->insertPosts(21);
 
@@ -213,8 +191,6 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $dbquery->createStore($this->session_id, 'intranet_id = 1');
         $dbquery->storeResult("use_stored", 'unittest', "toplevel");
         $db = $dbquery->getRecordset('id, name');
-
-
         $dbquery = $this->createDBQuery();
         $dbquery->createStore($this->session_id, 'intranet_id = 1');
         $_GET['use_stored'] = 'true';
