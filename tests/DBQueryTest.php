@@ -26,10 +26,10 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         if (PEAR::isError($this->db)) {
           throw new Exception('Could not connect to db');
         }
+
         $result = $this->db->exec('TRUNCATE TABLE dbquery_result');
         $result = $this->db->exec('TRUNCATE TABLE keyword');
         $result = $this->db->exec('TRUNCATE TABLE keyword_x_object');
-
         $result = $this->db->exec('DROP TABLE ' . $this->table);
 
         /*
@@ -60,7 +60,28 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
   KEY `intranet_id` (`intranet_id`,`session_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;'
         );
-
+        $result = $this->db->exec('CREATE TABLE IF NOT EXISTS `keyword` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `intranet_id` int(11) NOT NULL DEFAULT '0',
+  `keyword` varchar(255) NOT NULL DEFAULT '',
+  `type` varchar(255) NOT NULL DEFAULT '',
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `intranet_id` (`intranet_id`,`type`,`active`),
+  KEY `keyword` (`keyword`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;'
+        );
+        $result = $this->db->exec('CREATE TABLE IF NOT EXISTS `keyword_x_object` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `intranet_id` int(11) NOT NULL DEFAULT '0',
+  `belong_to` int(11) NOT NULL DEFAULT '0',
+  `keyword_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `intranet_id` (`intranet_id`),
+  KEY `belong_to` (`belong_to`),
+  KEY `keyword_id` (`keyword_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;'
+        );        
         $this->insertPosts();
     }
 
