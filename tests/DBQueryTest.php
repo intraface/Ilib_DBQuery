@@ -82,6 +82,10 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
 
     function tearDown()
     {
+        $this->db = MDB2::factory(TESTS_DB_DSN);
+        if (PEAR::isError($this->db)) {
+            throw new Exception($this->db->getUserInfo());
+        }
         $result = $this->db->exec('DROP TABLE ' . $this->table);
     }
 
