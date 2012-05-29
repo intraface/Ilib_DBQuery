@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/config.test.php';
 
-require_once '../src/Ilib/DBQuery.php';
+require_once dirname(__FILE__) . '/../src/Ilib/DBQuery.php';
 require_once 'MDB2.php';
 require_once 'Ilib/Error.php';
 require_once 'DB/Sql.php';
