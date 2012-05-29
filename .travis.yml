@@ -7,7 +7,7 @@ before_script:
   - sudo apt-get install php-pear
   - pear install http://download.pear.php.net/package/MDB2-2.5.0b3.tgz
   - pear install http://download.pear.php.net/package/MDB2_Driver_mysql-1.5.0b3.tgz
-  - pear install http://public.intraface.dk/get/DB_Sql-0.0.1.tgz  
   - pear install http://public.intraface.dk/get/Ilib_Error-1.0.1.tgz  
+  - pear install http://public.intraface.dk/get/DB_Sql-0.0.1.tgz  
   - phpenv rehash
 script: phpunit --configuration tests/phpunit.xml --coverage-text
