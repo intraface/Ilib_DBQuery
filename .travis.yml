@@ -4,4 +4,4 @@ php:
   - 5.3
 before_script:
   - mysql -e 'create database ilib_dbquery_test;'
-script: phpunit tests
+script: phpunit tests --configuration tests/phpunit.xml --coverage-text
