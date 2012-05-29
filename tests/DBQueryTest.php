@@ -14,6 +14,7 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
     private $db;
     private $table = 'dbquery_test';
     private $session_id;
+    protected $backupGlobals = FALSE;
 
     function setUp()
     {
