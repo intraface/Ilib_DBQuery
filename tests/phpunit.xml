@@ -10,15 +10,15 @@
 
     <testsuites>
         <testsuite name="DBQuery Test Suite">
-            <directory>./tests/</directory>
+            <directory>./</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>./</directory>
+            <directory>../</directory>
             <exclude>
-                <directory>./tests</directory>
+                <directory>./</directory>
             </exclude>
         </whitelist>
     </filter>
