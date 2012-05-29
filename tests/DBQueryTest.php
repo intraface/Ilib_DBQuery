@@ -23,6 +23,9 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $this->session_id = 'dsjr93jdi93id39ei2d93kdd9d2';
 
         $this->db = MDB2::factory(TESTS_DB_DSN);
+        if (PEAR::isError($this->db)) {
+          throw new Exception('Could not connect to db');
+        }
         $result = $this->db->exec('TRUNCATE TABLE dbquery_result');
         $result = $this->db->exec('TRUNCATE TABLE keyword');
         $result = $this->db->exec('TRUNCATE TABLE keyword_x_object');
