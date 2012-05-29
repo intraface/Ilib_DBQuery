@@ -11,9 +11,9 @@ require_once 'DB/Sql.php';
  */
 class DBQueryTest extends PHPUnit_Framework_TestCase
 {
-    private $db;
-    private $table = 'dbquery_test';
-    private $session_id;
+    protected $db;
+    protected $table = 'dbquery_test';
+    protected $session_id;
     protected $backupGlobals = FALSE;
 
     function setUp()
