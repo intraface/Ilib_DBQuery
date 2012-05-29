@@ -9,7 +9,7 @@
     </php>
 
     <testsuites>
-        <testsuite name="Ilib DBQuery Tests">
+        <testsuite name="DBQuery Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
