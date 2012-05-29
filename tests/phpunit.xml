@@ -2,10 +2,10 @@
 
 <phpunit bootstrap="bootstrap.php" colors="true">
     <php>
-        <var name="db_dsn" value="mysql:dbname=intraface;host=localhost"/>
+        <var name="db_dsn" value="mysql:dbname=ilib_dbquery_test;host=localhost"/>
         <var name="db_username" value="root"/>
-        <var name="db_password" value="klan1n"/>
-        <var name="db_name" value="intraface"/>
+        <var name="db_password" value=""/>
+        <var name="db_name" value="ilib_dbquery_test"/>
     </php>
 
     <testsuites>
