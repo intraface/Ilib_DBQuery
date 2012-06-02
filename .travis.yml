@@ -3,7 +3,6 @@ php:
   - 5.3
 before_script:
   - mysql -e 'create database IF NOT EXISTS ilib_dbquery_test;'
-  - sudo apt-get install php-pear
   - pear install http://download.pear.php.net/package/MDB2-2.5.0b3.tgz
   - pear install http://download.pear.php.net/package/MDB2_Driver_mysql-1.5.0b3.tgz
   - pear channel-discover public.intraface.dk
