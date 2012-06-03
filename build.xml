@@ -4,7 +4,7 @@
     <taskdef classname="phing.tasks.ext.IlibPearDeployerTask" name="peardeploy" />
 
     <property name="package-name" value="${phing.project.name}" />
-    <property name="version" value="0.1.10" />
+    <property name="version" value="0.1.11" />
     <property name="stability" value="stable" />
     <property name="pear.channel" value="public.intraface.dk" />
 
@@ -57,9 +57,9 @@
                 <php minimum_version="5.2.0" />
                 <pear minimum_version="1.6.0" />
                 <package name="DB_Sql" channel="public.intraface.dk" minimum_version="0.0.1" />
-                <package name="Ilib_Error" channel="public.intraface.dk" minimum_version="0.0.1" />
+                <package name="Ilib_Error" channel="public.intraface.dk" minimum_version="1.0.0" />
             </dependencies>
-            <notes>* Removed double private on load()</notes>
+            <notes>* Updated version for Ilib_Error</notes>
         </d51pearpkg2>
     </target>
 
