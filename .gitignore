@@ -2,3 +2,4 @@
 .project
 tests/config.test.php
 .settings
+vendor

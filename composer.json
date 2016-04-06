@@ -15,7 +15,25 @@
           "email": "sune@intraface.dk"
         }
     ],
-   "autoload": {
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/intraface/Ilib_Error.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/intraface/Ilib_ClassLoader.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/intraface/DB_Sql.git"
+        },
+        {
+            "type": "pear",
+            "url": "https://pear.php.net"
+        }
+    ],
+    "autoload": {
         "classmap": [
             "src/"
         ]
@@ -25,8 +43,13 @@
             "tests/"
         ]
     },
+    "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.2"
+        "php": ">=5.3.2",
+        "pear-pear.php.net/MDB2": "2.5.*",
+        "pear-pear.php.net/MDB2_Driver_mysql": "1.5.*",
+        "intraface/error": "*",
+        "intraface/dbsql": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "4.4.*",

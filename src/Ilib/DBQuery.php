@@ -386,7 +386,6 @@ class Ilib_DBQuery
         }
 
         for ($i = 0; $i * $this->rows_pr_page < $this->recordset_num_rows; $i++) {
-
             if ($view == "html") {
                 if ($this->paging_start == $i*$this->rows_pr_page) {
                     $but[$j] = "<strong>".$j."</strong>";
@@ -787,7 +786,6 @@ class Ilib_DBQuery
 
         // Sætter character på
         if ($use != "full" && $this->use_character) {
-
             if ($this->character_var_name == "") {
                 throw new Exception("For at benytte useCharacter(), skal du også benytte defineCharacter()");
             }
@@ -802,7 +800,7 @@ class Ilib_DBQuery
                 // $tmp_dbquery = clone $this;
                 $tmp = $this->getCharacters();
                 // Vi tager det første character
-                if (array_key_exists(0, $tmp) AND $tmp[0] != "") {
+                if (array_key_exists(0, $tmp) and $tmp[0] != "") {
                     $this->character = $tmp[0];
                 } else {
                     $this->character = "";
@@ -867,7 +865,6 @@ class Ilib_DBQuery
 
         // Laver paging
         if ($use != "full" && $this->paging_var_name != "") {
-
             $db->query("SELECT COUNT(DISTINCT(".$this->table.".id)) AS num_rows ".$sql);
             if ($db->nextRecord()) {
                 $this->recordset_num_rows = $db->f("num_rows");
@@ -883,7 +880,6 @@ class Ilib_DBQuery
         // Gemmer søgeresultatet
         // Skal ikke gemmes når det er et fuldt resultat.
         if ($use != "full" && $this->store_name != "") {
-
             if ($this->store_session_id == '') {
                 throw new Exception('You need to set session_id before storing a result. Use createStore to do that');
             }
@@ -909,10 +905,8 @@ class Ilib_DBQuery
             if ($this->store_toplevel == 1) {
                 $db->query("SELECT id FROM dbquery_result WHERE session_id = \"".$this->store_session_id."\" AND ".$store_extra_condition." toplevel = 1");
                 if ($db->nextRecord()) {
-
                     $db->query("UPDATE dbquery_result SET ".$store_sql." WHERE id = ".$db->f("id"));
                 } else {
-
                     $db->query("INSERT INTO dbquery_result SET session_id = \"".$this->store_session_id."\", ".$store_extra_insert_condition." toplevel = 1, ".$store_sql);
                 }
             } else {
@@ -1020,26 +1014,28 @@ class Ilib_DBQuery
     public function display($type)
     {
         switch ($type) {
-        case 'paging':
-            $paging = $this->getPaging('html');
-            if (empty($paging)) return '';
-            $links = "";
-            for ($i = 0, $max = count($paging); $i < $max; $i++) {
-                if (array_key_exists($i, $paging) AND $paging[$i] != "") {
-                    $links .= $paging[$i]." | ";
+            case 'paging':
+                $paging = $this->getPaging('html');
+                if (empty($paging)) {
+                    return '';
                 }
-            }
-            $size = $this->getRecordsetSize();
-            return '<div class="pagingNav">Side: '.$links.'<br />Viser: '.$size['show_from'].' til '.$size['show_to'].' af '.$size['number_of_rows'].'. </div>';
+                $links = "";
+                for ($i = 0, $max = count($paging); $i < $max; $i++) {
+                    if (array_key_exists($i, $paging) and $paging[$i] != "") {
+                        $links .= $paging[$i]." | ";
+                    }
+                }
+                $size = $this->getRecordsetSize();
+                return '<div class="pagingNav">Side: '.$links.'<br />Viser: '.$size['show_from'].' til '.$size['show_to'].' af '.$size['number_of_rows'].'. </div>';
             break;
-        case 'character':
-            if (count($this->getCharacters("html")) > 0) {
-                $links = implode(" - ", $this->getCharacters("html"));
-                return '<div class="characterNav">- ' . $links . ' -</div>';
-            } else {
-                return '';
-            }
-            break;
+            case 'character':
+                if (count($this->getCharacters("html")) > 0) {
+                    $links = implode(" - ", $this->getCharacters("html"));
+                    return '<div class="characterNav">- ' . $links . ' -</div>';
+                } else {
+                    return '';
+                }
+                break;
         }
     }
 

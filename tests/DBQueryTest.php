@@ -1,10 +1,4 @@
 <?php
-require_once dirname(__FILE__) . '/bootstrap.php';
-require_once dirname(__FILE__) . '/../src/Ilib/DBQuery.php';
-require_once 'MDB2.php';
-require_once 'Ilib/Error.php';
-require_once 'DB/Sql.php';
-
 define('TESTS_DB_DSN', 'mysql://'.$GLOBALS['db_username'].':'.$GLOBALS['db_password'].'@localhost/'.$GLOBALS['db_name']);
 define('DB_DSN', TESTS_DB_DSN);
 
@@ -86,7 +80,7 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
 
     function insertPosts($count = 21)
     {
-        $data = array('one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'æske', 'åbne');
+        $data = array('one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'ï¿½ske', 'ï¿½bne');
         $i = 0;
         foreach ($data as $d) {
             if ($count <= $i) {
@@ -179,7 +173,7 @@ class DBQueryTest extends PHPUnit_Framework_TestCase
         $db = $dbquery->getRecordset('*', '', false);
 
         $expected = array(
-            'e', 'f', 'n', 'o', 's', 't', 'æ', 'ø'
+            'e', 'f', 'n', 'o', 's', 't', 'ï¿½', 'ï¿½'
         );
 
         $this->assertEquals($expected, $dbquery->getCharacters());
