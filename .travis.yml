@@ -9,5 +9,5 @@ install:
   - travis_retry composer self-update && composer --version
   - travis_retry composer install  --prefer-dist --no-interaction
 script:
-  - phpunit --configuration tests/phpunit.xml --coverage-text
+  - phpunit --coverage-text
   - vendor/bin/phpcs --standard=phpcs.xml src

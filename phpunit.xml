@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit bootstrap="bootstrap.php" colors="true">
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="false"
+         bootstrap="vendor/autoload.php"
+        >
     <php>
         <var name="db_dsn" value="mysql:dbname=ilib_dbquery_test;host=localhost"/>
         <var name="db_username" value="root"/>
@@ -10,7 +18,7 @@
 
     <testsuites>
         <testsuite name="DBQuery Test Suite">
-            <directory>./</directory>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 
