@@ -47,7 +47,7 @@
     "require": {
         "php": ">=5.3.2",
         "pear-pear.php.net/MDB2": "2.4.*",
-        "pear-pear.php.net/MDB2_Driver_mysql": "1.5.*",
+        "pear-pear.php.net/MDB2_Driver_mysql": "1.4.*",
         "intraface/error": "*",
         "intraface/dbsql": "*"
     },
