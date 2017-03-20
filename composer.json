@@ -1,8 +1,7 @@
-
 {
   "name": "intraface/dbquery",
     "type": "library",
-    "description": "",
+    "description": "Class to help doing complex searches",
     "homepage": "https://github.com/intraface/Ilib_DBQuery",
     "license": "MIT",
     "authors": [
@@ -19,10 +18,6 @@
         {
             "type": "git",
             "url": "https://github.com/intraface/Ilib_Error.git"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/intraface/Ilib_ClassLoader.git"
         },
         {
             "type": "git",
@@ -46,10 +41,10 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.2",
-        "pear-pear.php.net/MDB2": "2.4.*",
-        "pear-pear.php.net/MDB2_Driver_mysql": "1.4.*",
-        "intraface/error": "*",
-        "intraface/dbsql": "*"
+        "pear-pear.php.net/MDB2": "2.5.0-beta5@beta",
+        "pear-pear.php.net/MDB2_Driver_mysqli": "1.5.0-beta4@beta",
+        "intraface/error": "dev-master",
+        "intraface/dbsql": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "4.4.*",
